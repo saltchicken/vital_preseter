@@ -1,0 +1,17 @@
+{
+  "preset_name": "Harmonic Noise Pad",
+  "use_wavetables": [
+    "Harmonic Series", 
+    "Brown Noise"
+  ],
+  "settings": {
+    "osc_1_on": 1,
+    "osc_2_on": 1,
+    "osc_1_wavetable_frame": 0.5,
+    "osc_2_wavetable_frame": 0.0,
+    "osc_2_level": 0.5,
+    "env_1_attack": 1.5,
+    "env_1_release": 2.0
+  },
+  "modulations": []
+}
