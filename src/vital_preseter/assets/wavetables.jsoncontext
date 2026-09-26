@@ -304,5 +304,200 @@
     "name": "Vital Sine 2",
     "remove_all_dc": false,
     "version": "1.0.7"
+  },
+  {
+    "author": "",
+    "full_normalize": false,
+    "groups": [
+      {
+        "components": [
+          {
+            "interpolation": 1,
+            "interpolation_style": 1,
+            "keyframes": [
+              {
+                "position": 0,
+                "wave_data": "[REDACTED]"
+              }
+            ],
+            "type": "Wave Source"
+          },
+          {
+            "interpolation_style": 1,
+            "keyframes": [
+              {
+                "cutoff": 0.46799376606941223,
+                "position": 0,
+                "shape": 0.07883904874324799
+              },
+              {
+                "cutoff": 5.522054195404053,
+                "position": 256,
+                "shape": 0.07883904874324799
+              }
+            ],
+            "normalize": true,
+            "style": 1,
+            "type": "Frequency Filter"
+          }
+        ]
+      }
+    ],
+    "name": "Vital Sine 2",
+    "remove_all_dc": false,
+    "version": "1.0.7"
+  },
+  {
+    "author": "",
+    "full_normalize": false,
+    "groups": [
+      {
+        "components": [
+          {
+            "interpolation_style": 1,
+            "keyframes": [
+              {
+                "line": {
+                  "name": "Linear",
+                  "num_points": 4,
+                  "points": [
+                    0.0,
+                    0.5,
+                    0.0,
+                    0.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.5
+                  ],
+                  "powers": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "smooth": false
+                },
+                "position": 0,
+                "pull_power": 0.0
+              }
+            ],
+            "num_points": 4,
+            "type": "Line Source"
+          },
+          {
+            "interpolation_style": 1,
+            "keyframes": [
+              {
+                "fold_boost": 2.045212507247925,
+                "position": 0
+              },
+              {
+                "fold_boost": 27.149890899658203,
+                "position": 256
+              }
+            ],
+            "type": "Wave Folder"
+          },
+          {
+            "interpolation_style": 1,
+            "keyframes": [
+              {
+                "left_position": 0.25,
+                "position": 0,
+                "right_position": 0.75
+              }
+            ],
+            "type": "Wave Window",
+            "window_shape": 0
+          }
+        ]
+      }
+    ],
+    "name": "Vital Sine",
+    "remove_all_dc": false,
+    "version": "1.0.7"
+  },
+  {
+    "author": "",
+    "full_normalize": false,
+    "groups": [
+      {
+        "components": [
+          {
+            "interpolation_style": 1,
+            "keyframes": [
+              {
+                "line": {
+                  "name": "Linear",
+                  "num_points": 6,
+                  "points": [
+                    0.0,
+                    1.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.5,
+                    0.0,
+                    0.5,
+                    1.0,
+                    1.0,
+                    1.0
+                  ],
+                  "powers": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "smooth": false
+                },
+                "position": 0,
+                "pull_power": 0.0
+              },
+              {
+                "line": {
+                  "name": "Linear",
+                  "num_points": 6,
+                  "points": [
+                    0.0,
+                    1.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    1.0,
+                    1.0
+                  ],
+                  "powers": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "smooth": false
+                },
+                "position": 256,
+                "pull_power": 0.0
+              }
+            ],
+            "num_points": 6,
+            "type": "Line Source"
+          }
+        ]
+      }
+    ],
+    "name": "Pulse Width",
+    "remove_all_dc": false,
+    "version": "1.0.7"
   }
 ]

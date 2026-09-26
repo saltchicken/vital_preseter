@@ -67,8 +67,13 @@ def mutate_preset(template_data: Dict[str, Any], patch_data: Dict[str, Any], wt_
     if 'modulations' not in settings:
         settings['modulations'] = []
         
+    next_idx = 0
     for mod in patch_data.get("modulations", []):
-        idx = mod["index"]
+        # Auto-assign index if omitted, preventing KeyErrors and accidental overwrites
+        idx = mod.get("index", next_idx)
+        if idx >= next_idx:
+            next_idx = idx + 1
+            
         mod_num = idx + 1 
         
         while len(settings['modulations']) <= idx:
@@ -79,8 +84,12 @@ def mutate_preset(template_data: Dict[str, Any], patch_data: Dict[str, Any], wt_
             "destination": mod.get("destination", "")
         }
         
+        # Apply all Vital modulation attributes
         settings[f'modulation_{mod_num}_amount'] = mod.get("amount", 0.0)
         settings[f'modulation_{mod_num}_bipolar'] = mod.get("bipolar", 0.0)
+        settings[f'modulation_{mod_num}_power'] = mod.get("power", 0.0)
+        settings[f'modulation_{mod_num}_stereo'] = mod.get("stereo", 0.0)
+        settings[f'modulation_{mod_num}_bypass'] = mod.get("bypass", 0.0)
 
     # Process wavetables
     if "wavetables" not in settings:

@@ -1,0 +1,64 @@
+{
+  "preset_name": "Stranger_Things_Arp",
+  "use_wavetables": [
+    "Init",
+    "Init"
+  ],
+  "settings": {
+    "osc_1_on": 1.0,
+    "osc_1_unison_voices": 2.0,
+    "osc_1_unison_detune": 0.08,
+    
+    "osc_2_on": 1.0,
+    "osc_2_transpose": -12.0,
+    "osc_2_unison_voices": 1.0,
+
+    "env_1_attack": 0.005,
+    "env_1_decay": 0.4,
+    "env_1_sustain": 0.1,
+    "env_1_release": 0.25,
+
+    "env_2_attack": 0.001,
+    "env_2_decay": 0.35,
+    "env_2_sustain": 0.0,
+    "env_2_release": 0.2,
+
+    "filter_1_on": 1.0,
+    "filter_1_cutoff": 42.0,
+    "filter_1_resonance": 0.35,
+    "filter_1_drive": 1.5,
+
+    "noise_on": 1.0,
+    "noise_level": 0.02,
+
+    "chorus_on": 1.0,
+    "chorus_mix": 0.25,
+    
+    "delay_on": 1.0,
+    "delay_mix": 0.2,
+    
+    "reverb_on": 1.0,
+    "reverb_mix": 0.15,
+    "reverb_time": 0.4,
+    
+    "lfo_1_frequency": 1.5,
+    "lfo_1_sync": 0.0
+  },
+  "modulations": [
+    {
+      "source": "env_2",
+      "destination": "filter_1_cutoff",
+      "amount": 35.0
+    },
+    {
+      "source": "lfo_1",
+      "destination": "osc_1_tune",
+      "amount": 0.15
+    },
+    {
+      "source": "lfo_1",
+      "destination": "osc_2_tune",
+      "amount": 0.15
+    }
+  ]
+}
