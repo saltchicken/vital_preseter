@@ -59,7 +59,7 @@ def apply_patch(input_file, output_file, patch_data):
 # 2. CLI INTERFACE
 # ==========================================
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description="Vital Preset Generator: Build presets programmatically.")
     parser.add_argument("-p", "--patch", required=True, help="Path to the JSON patch definition file")
     parser.add_argument("-i", "--input", default="vital-init.vital", help="Path to the source .vital Init template")
@@ -86,3 +86,6 @@ if __name__ == "__main__":
     
     # 3. Build the preset
     apply_patch(args.input, output_filename, patch_data)
+
+if __name__ == "__main__":
+    main()

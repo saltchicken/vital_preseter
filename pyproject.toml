@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=61.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vital-preseter"
+version = "0.1.0"
+description = "Vital Preset Generator: Build presets programmatically."
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = []
+
+[project.scripts]
+vital-preseter = "vital_preseter.__main__:main"

@@ -1,0 +1,57 @@
+{
+  "preset_name": "Chariots of Fire Brass",
+  "settings": {
+    "osc_1_on": 1.0,
+    "osc_1_unison_voices": 5.0,
+    "osc_1_unison_detune": 0.15,
+    "osc_2_on": 1.0,
+    "osc_2_unison_voices": 5.0,
+    "osc_2_unison_detune": 0.18,
+    
+    "filter_1_on": 1.0,
+    "filter_1_cutoff": 42.0,
+    "filter_1_resonance": 0.15,
+    "filter_1_drive": 0.2,
+    
+    "env_1_attack": 0.15,
+    "env_1_decay": 1.0,
+    "env_1_sustain": 1.0,
+    "env_1_release": 1.4,
+    
+    "env_2_attack": 0.25,
+    "env_2_decay": 2.0,
+    "env_2_sustain": 0.2,
+    "env_2_release": 1.4,
+
+    "lfo_1_frequency": 3.0,
+    
+    "chorus_on": 1.0,
+    "chorus_mix": 0.4,
+    "reverb_on": 1.0,
+    "reverb_mix": 0.45,
+    "reverb_time": 0.65
+  },
+  "modulations": [
+    {
+      "index": 0,
+      "source": "env_2",
+      "destination": "filter_1_cutoff",
+      "amount": 48.0,
+      "bipolar": false
+    },
+    {
+      "index": 1,
+      "source": "lfo_1",
+      "destination": "global_pitch",
+      "amount": 0.15,
+      "bipolar": true
+    },
+    {
+      "index": 2,
+      "source": "pressure",
+      "destination": "filter_1_cutoff",
+      "amount": 15.0,
+      "bipolar": false
+    }
+  ]
+}
