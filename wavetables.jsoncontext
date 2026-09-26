@@ -1,0 +1,308 @@
+[
+  {
+    "author": "",
+    "full_normalize": false,
+    "groups": [
+      {
+        "components": [
+          {
+            "interpolation": 0,
+            "interpolation_style": 1,
+            "keyframes": [
+              {
+                "position": 8,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 24,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 40,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 56,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 72,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 88,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 104,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 120,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 136,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 152,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 168,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 184,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 200,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 216,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 232,
+                "wave_data": "[REDACTED]"
+              },
+              {
+                "position": 248,
+                "wave_data": "[REDACTED]"
+              }
+            ],
+            "type": "Wave Source"
+          }
+        ]
+      }
+    ],
+    "name": "Harmonic Series",
+    "remove_all_dc": false,
+    "version": "1.0.7"
+  },
+  {
+    "author": "Matt Tytelゑ",
+    "full_normalize": true,
+    "groups": [
+      {
+        "components": [
+          {
+            "audio_file": "[REDACTED]",
+            "audio_sample_rate": 44100,
+            "fade_style": 3,
+            "interpolation_style": 1,
+            "keyframes": [
+              {
+                "position": 0,
+                "start_position": 0.0,
+                "window_fade": 1.0,
+                "window_size": 2048.0
+              },
+              {
+                "position": 256,
+                "start_position": 86133.0,
+                "window_fade": 1.0,
+                "window_size": 2048.0
+              }
+            ],
+            "normalize_gain": false,
+            "normalize_mult": false,
+            "phase_style": 0,
+            "random_seed": 1617343744,
+            "type": "Audio File Source",
+            "window_size": 2048.0
+          }
+        ]
+      }
+    ],
+    "name": "Brown Noise",
+    "remove_all_dc": true,
+    "version": "1.0.7"
+  },
+  {
+    "author": "",
+    "full_normalize": true,
+    "groups": [
+      {
+        "components": [
+          {
+            "interpolation": 1,
+            "interpolation_style": 1,
+            "keyframes": [
+              {
+                "position": 0,
+                "wave_data": "[REDACTED]"
+              }
+            ],
+            "type": "Wave Source"
+          }
+        ]
+      }
+    ],
+    "name": "Init",
+    "remove_all_dc": true,
+    "version": "1.0.7"
+  },
+  {
+    "author": "Glorkglunk",
+    "full_normalize": true,
+    "groups": [
+      {
+        "components": [
+          {
+            "audio_file": "[REDACTED]",
+            "audio_sample_rate": 88200,
+            "fade_style": 2,
+            "interpolation_style": 1,
+            "keyframes": [
+              {
+                "position": 0,
+                "start_position": 0.0,
+                "window_fade": 1.0,
+                "window_size": 2048.0
+              },
+              {
+                "position": 256,
+                "start_position": 329728.0,
+                "window_fade": 1.0,
+                "window_size": 2048.0
+              }
+            ],
+            "normalize_gain": false,
+            "normalize_mult": false,
+            "phase_style": 0,
+            "random_seed": 813936000,
+            "type": "Audio File Source",
+            "window_size": 2048.0
+          }
+        ]
+      }
+    ],
+    "name": "Creepy Solar",
+    "remove_all_dc": true,
+    "version": "1.0.7"
+  },
+  {
+    "author": "Glorkglunk",
+    "full_normalize": true,
+    "groups": [
+      {
+        "components": [
+          {
+            "audio_file": "[REDACTED]",
+            "audio_sample_rate": 88200,
+            "fade_style": 2,
+            "interpolation_style": 1,
+            "keyframes": [
+              {
+                "position": 0,
+                "start_position": 0.0,
+                "window_fade": 1.0,
+                "window_size": 2048.0
+              },
+              {
+                "position": 256,
+                "start_position": 520192.0,
+                "window_fade": 1.0,
+                "window_size": 2048.0
+              }
+            ],
+            "normalize_gain": false,
+            "normalize_mult": false,
+            "phase_style": 0,
+            "random_seed": 664825280,
+            "type": "Audio File Source",
+            "window_size": 2048.0
+          }
+        ]
+      }
+    ],
+    "name": "Flange Sqrowl",
+    "remove_all_dc": true,
+    "version": "1.0.7"
+  },
+  {
+    "author": "Glorkglunk",
+    "full_normalize": true,
+    "groups": [
+      {
+        "components": [
+          {
+            "audio_file": "[REDACTED]",
+            "audio_sample_rate": 88200,
+            "fade_style": 3,
+            "interpolation_style": 1,
+            "keyframes": [
+              {
+                "position": 0,
+                "start_position": 0.0,
+                "window_fade": 1.0,
+                "window_size": 2048.0
+              },
+              {
+                "position": 256,
+                "start_position": 245760.0,
+                "window_fade": 1.0,
+                "window_size": 2048.0
+              }
+            ],
+            "normalize_gain": false,
+            "normalize_mult": false,
+            "phase_style": 0,
+            "random_seed": -1147178752,
+            "type": "Audio File Source",
+            "window_size": 2048.0
+          }
+        ]
+      }
+    ],
+    "name": "Alternating Harmonics",
+    "remove_all_dc": true,
+    "version": "1.0.7"
+  },
+  {
+    "author": "",
+    "full_normalize": false,
+    "groups": [
+      {
+        "components": [
+          {
+            "interpolation": 1,
+            "interpolation_style": 1,
+            "keyframes": [
+              {
+                "position": 0,
+                "wave_data": "[REDACTED]"
+              }
+            ],
+            "type": "Wave Source"
+          },
+          {
+            "interpolation_style": 1,
+            "keyframes": [
+              {
+                "cutoff": 0.46799376606941223,
+                "position": 0,
+                "shape": 0.07883904874324799
+              },
+              {
+                "cutoff": 5.522054195404053,
+                "position": 256,
+                "shape": 0.07883904874324799
+              }
+            ],
+            "normalize": true,
+            "style": 1,
+            "type": "Frequency Filter"
+          }
+        ]
+      }
+    ],
+    "name": "Vital Sine 2",
+    "remove_all_dc": false,
+    "version": "1.0.7"
+  }
+]
