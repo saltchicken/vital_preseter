@@ -12,3 +12,6 @@ dependencies = []
 
 [project.scripts]
 vital-preseter = "vital_preseter.__main__:main"
+
+[tool.setuptools.package-data]
+vital_preseter = ["assets/*"]

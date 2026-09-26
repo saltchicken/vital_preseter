@@ -1,32 +1,69 @@
 import json
 import argparse
 import sys
-import os
+import importlib.resources as pkg_resources
+from pathlib import Path
+from typing import Any, Dict, List
 
 # ==========================================
-# 1. ENGINE LOGIC
+# 1. I/O AND ASSET MANAGEMENT
 # ==========================================
 
-def apply_patch(input_file, output_file, patch_data, wt_lib_path="wavetables.json"):
-    """Loads a template, injects patch data, and saves the new preset."""
+def load_json_file(path: Path) -> Any:
+    """Loads and parses a JSON file from the filesystem."""
     try:
-        with open(input_file, 'r', encoding='utf-8') as f:
-            data = json.load(f)
+        with path.open('r', encoding='utf-8') as f:
+            return json.load(f)
     except FileNotFoundError:
-        print(f"Error: Could not find the template file at '{input_file}'. Did you export it from Vital?")
+        print(f"Error: Could not find file at '{path}'.")
+        sys.exit(1)
+    except json.JSONDecodeError as e:
+        print(f"Error: '{path}' is not a valid JSON file. {e}")
+        sys.exit(1)
+
+def save_json_file(path: Path, data: Dict[str, Any]) -> None:
+    """Saves a dictionary to a JSON file on the filesystem."""
+    # Ensure the parent directory exists
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with path.open('w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2)
+        print(f"Success! Saved preset to {path}")
+    except Exception as e:
+        print(f"Error writing file to {path}: {e}")
+        sys.exit(1)
+
+def load_bundled_asset(filename: str) -> Any:
+    """Loads a JSON asset bundled within the installed Python package."""
+    try:
+        # read_text is compatible with Python >=3.8
+        content = pkg_resources.read_text('vital_preseter.assets', filename)
+        return json.loads(content)
+    except FileNotFoundError:
+        print(f"Error: Bundled asset '{filename}' not found. Is the package installed correctly?")
         sys.exit(1)
     except json.JSONDecodeError:
-        print(f"Error: '{input_file}' is not a valid JSON file. It may be corrupted.")
+        print(f"Error: Bundled asset '{filename}' is corrupted.")
         sys.exit(1)
+
+# ==========================================
+# 2. CORE ENGINE LOGIC
+# ==========================================
+
+def mutate_preset(template_data: Dict[str, Any], patch_data: Dict[str, Any], wt_lib: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Injects patch data into the vital template and returns the modified dictionary."""
+    data = template_data.copy()
 
     if "preset_name" in patch_data:
         data["preset_name"] = patch_data["preset_name"]
 
     settings = data.get('settings', {})
 
+    # Apply top-level settings
     for key, value in patch_data.get("settings", {}).items():
         settings[key] = value
 
+    # Process modulations
     if 'modulations' not in settings:
         settings['modulations'] = []
         
@@ -35,97 +72,81 @@ def apply_patch(input_file, output_file, patch_data, wt_lib_path="wavetables.jso
         mod_num = idx + 1 
         
         while len(settings['modulations']) <= idx:
-            settings['modulations'].append({})
+            settings['modulations'].append({"source": "", "destination": ""})
             
         settings['modulations'][idx] = {
-            "source": mod["source"],
-            "destination": mod["destination"]
+            "source": mod.get("source", ""),
+            "destination": mod.get("destination", "")
         }
         
-        settings[f'modulation_{mod_num}_amount'] = mod["amount"]
-        settings[f'modulation_{mod_num}_bipolar'] = mod["bipolar"]
+        settings[f'modulation_{mod_num}_amount'] = mod.get("amount", 0.0)
+        settings[f'modulation_{mod_num}_bipolar'] = mod.get("bipolar", 0.0)
 
-    # --- WAVETABLE INJECTION LOGIC ---
-    # Vital strictly requires exactly 3 wavetables INSIDE the 'settings' block.
+    # Process wavetables
     if "wavetables" not in settings:
-        settings["wavetables"] = [{}, {}, {}] # Failsafe fallback
+        settings["wavetables"] = [{}, {}, {}]
 
     if "use_wavetables" in patch_data:
-        try:
-            with open(wt_lib_path, 'r', encoding='utf-8') as f:
-                wt_lib = json.load(f)
-            
-            # Map wavetable names to their data blocks
-            wt_dict = {wt.get("name", ""): wt for wt in wt_lib}
-            
-            for i, wt_name in enumerate(patch_data["use_wavetables"]):
-                if wt_name in wt_dict:
-                    if i < len(settings["wavetables"]):
-                        settings["wavetables"][i] = wt_dict[wt_name]
-                else:
-                    print(f"Warning: Wavetable '{wt_name}' not found in {wt_lib_path}.")
+        wt_dict = {wt.get("name", ""): wt for wt in wt_lib}
+        
+        for i, wt_name in enumerate(patch_data["use_wavetables"]):
+            if wt_name in wt_dict:
+                if i < len(settings["wavetables"]):
+                    settings["wavetables"][i] = wt_dict[wt_name]
+            else:
+                print(f"Warning: Wavetable '{wt_name}' not found in library.")
 
-        except FileNotFoundError:
-            print(f"Warning: Wavetable library '{wt_lib_path}' not found. Cannot inject named wavetables.")
-    
-    # Fallback: Direct injection if full array is provided in patch file
     elif "wavetables" in patch_data:
         if len(patch_data["wavetables"]) == 3:
             settings["wavetables"] = patch_data["wavetables"]
         else:
             print("Warning: Direct 'wavetables' array must have exactly 3 elements. Skipping injection.")
 
-    # ---------------------------------
-
-    # Reattach the updated settings block back to the main data
     data['settings'] = settings
-
-    output_file = f"presets/{output_file}"
-
-    # Ensure presets directory exists
-    os.makedirs(os.path.dirname(output_file), exist_ok=True)
-
-    try:
-        with open(output_file, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2) 
-        print(f"Success! Saved preset to {output_file}")
-    except Exception as e:
-        print(f"Error writing file: {e}")
-        sys.exit(1)
+    return data
 
 
 # ==========================================
-# 2. CLI INTERFACE
+# 3. CLI INTERFACE
 # ==========================================
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description="Vital Preset Generator: Build presets programmatically.")
-    parser.add_argument("-p", "--patch", required=True, help="Path to the JSON patch definition file")
-    parser.add_argument("-i", "--input", default="vital-init.vital", help="Path to the source .vital Init template")
-    parser.add_argument("-o", "--output", help="Path for the generated output preset")
-    parser.add_argument("-w", "--wavetables", default="wavetables.json", help="Path to the wavetable JSON library")
+    parser.add_argument("-p", "--patch", required=True, type=Path, help="Path to the JSON patch definition file")
+    parser.add_argument("-i", "--input", type=Path, help="Path to a custom source .vital Init template (optional)")
+    parser.add_argument("-o", "--output", type=Path, help="Path for the generated output preset")
+    parser.add_argument("-w", "--wavetables", type=Path, help="Path to a custom wavetable JSON library (optional)")
     
     args = parser.parse_args()
     
-    # 1. Load the external patch file
-    try:
-        with open(args.patch, 'r', encoding='utf-8') as f:
-            patch_data = json.load(f)
-    except FileNotFoundError:
-        print(f"Error: Could not find patch file '{args.patch}'.")
-        sys.exit(1)
-    except json.JSONDecodeError as e:
-        print(f"Error: '{args.patch}' is not valid JSON. {e}")
-        sys.exit(1)
+    # 1. Load the patch file
+    patch_data = load_json_file(args.patch)
     
-    # 2. Dynamically determine the output filename
-    output_filename = args.output
-    if not output_filename:
+    # 2. Load Template (use explicitly provided path, or fall back to package asset)
+    if args.input:
+        template_data = load_json_file(args.input)
+    else:
+        template_data = load_bundled_asset("vital-init.vital")
+        
+    # 3. Load Wavetables (use explicitly provided path, or fall back to package asset)
+    if args.wavetables:
+        wt_lib = load_json_file(args.wavetables)
+    else:
+        wt_lib = load_bundled_asset("wavetables.json")
+        
+    # 4. Build the preset dictionary
+    new_preset_data = mutate_preset(template_data, patch_data, wt_lib)
+    
+    # 5. Determine exact output path
+    output_path = args.output
+    if not output_path:
+        # Fallback to local ./presets/ folder if no specific path is given
         preset_name = patch_data.get("preset_name", "Generated_Preset")
         output_filename = f"{preset_name.replace(' ', '_')}.vital"
-    
-    # 3. Build the preset
-    apply_patch(args.input, output_filename, patch_data, args.wavetables)
+        output_path = Path("presets") / output_filename
+        
+    # 6. Save the final file
+    save_json_file(output_path, new_preset_data)
 
 if __name__ == "__main__":
     main()
