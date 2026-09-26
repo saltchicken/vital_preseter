@@ -2,7 +2,7 @@
   "preset_name": "Harmonic Noise Pad",
   "use_wavetables": [
     "Harmonic Series", 
-    "Brown Noise"
+    "Creepy Solar"
   ],
   "settings": {
     "osc_1_on": 1,

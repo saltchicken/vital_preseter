@@ -1,0 +1,57 @@
+{
+  "preset_name": "Flash Gordon Lead",
+  "use_wavetables": [
+    "Init",
+    "Init",
+    "Init"
+  ],
+  "settings": {
+    "osc_1_on": 1,
+    "osc_1_unison_voices": 7,
+    "osc_1_unison_detune": 0.15,
+    "osc_2_on": 1,
+    "osc_2_unison_voices": 5,
+    "osc_2_unison_detune": 0.2,
+    "osc_2_pitch": 0,
+    "filter_1_on": 1,
+    "filter_1_cutoff": 45,
+    "filter_1_resonance": 0.2,
+    "filter_1_drive": 0.5,
+    "env_1_attack": 0.01,
+    "env_1_decay": 0.5,
+    "env_1_sustain": 1.0,
+    "env_1_release": 0.2,
+    "env_2_attack": 0.01,
+    "env_2_decay": 0.35,
+    "env_2_sustain": 0.15,
+    "env_2_release": 0.2,
+    "lfo_1_frequency": 5.0,
+    "lfo_1_sync": 0,
+    "polyphony": 1,
+    "legato": 1,
+    "portamento_time": 0.12,
+    "delay_on": 1,
+    "delay_mix": 0.25,
+    "reverb_on": 1,
+    "reverb_mix": 0.3,
+    "reverb_size": 0.6,
+    "chorus_on": 1,
+    "chorus_mix": 0.2
+  },
+  "modulations": [
+    {
+      "index": 0,
+      "source": "env_2",
+      "destination": "filter_1_cutoff",
+      "amount": 0.35,
+      "bipolar": false
+    },
+    {
+      "index": 1,
+      "source": "lfo_1",
+      "destination": "global_tune",
+      "amount": 0.015,
+      "bipolar": true
+    }
+  ]
+}
