@@ -6,54 +6,55 @@ import sys
 # 1. PATCH DATA REPOSITORY
 # ==========================================
 
-CS80_PATCH = {
-    "preset_name": "Blade Runner CS-80 V2",
+PATCH = {
+    "preset_name": "Escape From NY Pluck",
     "settings": {
-        # Oscillators (Lush 5-voice unison)
-        "osc_1_unison_voices": 5.0,
-        "osc_1_unison_detune": 3.0,
+        # Oscillators (Prophet-5 style dual setup)
+        "osc_1_on": 1.0,
+        "osc_1_unison_voices": 1.0, # Classic mono analog feel
         "osc_2_on": 1.0,
-        "osc_2_unison_voices": 5.0,
-        "osc_2_unison_detune": 4.0,
-        "osc_2_pitch_transpose": -12.0,
+        "osc_2_unison_voices": 1.0,
+        "osc_2_pitch_transpose": -12.0, # Sub octave for weight
 
-        # Envelopes
-        "env_1_attack": 0.15,
-        "env_1_decay": 1.5,
-        "env_1_sustain": 0.6,
-        "env_1_release": 2.0,
+        # Envelopes (Plucky sequences)
+        # Amp Env (Env 1)
+        "env_1_attack": 0.005,
+        "env_1_decay": 0.45,
+        "env_1_sustain": 0.0,
+        "env_1_release": 0.2,
         
-        "env_2_attack": 0.08,
-        "env_2_decay": 1.0,
-        "env_2_sustain": 0.2,
-        "env_2_release": 2.0,
+        # Filter Env (Env 2)
+        "env_2_attack": 0.001,
+        "env_2_decay": 0.35,
+        "env_2_sustain": 0.0,
+        "env_2_release": 0.15,
 
-        # Filter
+        # Filter (Dark Analog Lowpass)
         "filter_1_on": 1.0,
-        "filter_1_cutoff": 35.0,
-        "filter_1_resonance": 0.35,
-        "filter_1_drive": 1.5,
+        "filter_1_cutoff": 28.0, # Low baseline, opened by envelope
+        "filter_1_resonance": 0.45, # Squelchy analog bite
+        "filter_1_drive": 0.8,
 
-        # LFO (Tape drift)
+        # LFO (Analog component drift)
         "lfo_1_sync": 0.0,
-        "lfo_1_frequency": 0.15,
+        "lfo_1_frequency": 0.2,
 
-        # Effects
-        "chorus_on": 1.0,
-        "chorus_dry_wet": 0.35,
+        # Effects (Classic delay for the sequencer feel)
+        "delay_on": 1.0,
+        "delay_feedback": 0.4,
+        "delay_dry_wet": 0.35,
         "reverb_on": 1.0,
-        "reverb_size": 0.75,
-        "reverb_decay_time": 0.6,
-        "reverb_dry_wet": 0.35,
+        "reverb_size": 0.3,
+        "reverb_decay_time": 0.4,
+        "reverb_dry_wet": 0.15,
     },
     "modulations": [
-        # Explicit index mapping to revert to the original override method
-        # Filter Envelope (Mod 1 -> Index 0)
-        {"index": 0, "source": "env_2", "destination": "filter_1_cutoff", "amount": 0.35, "bipolar": 0.0},
-        # Vintage Pitch Drift (Mod 2 -> Index 1)
+        # Filter Envelope plucking the cutoff (Mod 1 -> Index 0)
+        {"index": 0, "source": "env_2", "destination": "filter_1_cutoff", "amount": 0.55, "bipolar": 0.0},
+        # Vintage Pitch Drift on Osc 1 (Mod 2 -> Index 1)
         {"index": 1, "source": "lfo_1", "destination": "osc_1_tune", "amount": 0.008, "bipolar": 1.0},
-        # Osc 2 Drift (Mod 3 -> Index 2)
-        {"index": 2, "source": "lfo_1", "destination": "osc_2_tune", "amount": -0.008, "bipolar": 1.0},
+        # Vintage Pitch Drift on Osc 2 (Mod 3 -> Index 2)
+        {"index": 2, "source": "lfo_1", "destination": "osc_2_tune", "amount": -0.011, "bipolar": 1.0},
     ]
 }
 
@@ -125,8 +126,15 @@ def apply_patch(input_file, output_file, patch_data):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Vital Preset Generator: Build presets programmatically.")
     parser.add_argument("-i", "--input", default="vital-init.vital", help="Path to the source .vital Init template")
-    parser.add_argument("-o", "--output", default="BladeRunnerCS80_Fixed.vital", help="Path for the generated output preset")
+    parser.add_argument("-o", "--output", help="Path for the generated output preset (defaults to preset_name)")
     
     args = parser.parse_args()
     
-    apply_patch(args.input, args.output, CS80_PATCH)
+    # Dynamically determine the output filename
+    output_filename = args.output
+    if not output_filename:
+        preset_name = PATCH.get("preset_name", "Generated_Preset")
+        # Replace spaces with underscores for safe cross-platform file names
+        output_filename = f"{preset_name.replace(' ', '_')}.vital"
+    
+    apply_patch(args.input, output_filename, PATCH)
